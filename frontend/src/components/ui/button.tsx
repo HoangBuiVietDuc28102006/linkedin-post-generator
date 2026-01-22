@@ -3,7 +3,7 @@ import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "@/lib/utils"
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center rounded-md font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none",
+  "inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none",
   {
     variants: {
       variant: {
@@ -12,9 +12,9 @@ const buttonVariants = cva(
         ghost: "bg-transparent hover:bg-zinc-800",
       },
       size: {
-        sm: "h-8 px-3 text-sm",
+        sm: "h-8 px-3",
         md: "h-10 px-4",
-        lg: "h-12 px-6 text-base",
+        lg: "h-12 px-6",
       },
     },
     defaultVariants: {

@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Select } from "@/components/ui/dropdown"
+import Slider from "@/components/ui/slider"
 
 function App() {
 
@@ -39,6 +40,7 @@ function App() {
         </Select>
         Word Length
         <Input type="number" placeholder="Approximately Length" />
+        <Slider min={20} max={2000} value={30} step={1} />
 
       </div>
       <div className="space-y-1 p-5 bg-blue-100">

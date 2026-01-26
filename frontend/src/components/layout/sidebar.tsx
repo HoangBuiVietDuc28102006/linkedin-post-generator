@@ -1,10 +1,10 @@
-import * as React from "react"
 import logo from "@/assets/LIPG.png"
 import { navigation } from "@/config/navigation"
 import { SidebarItem } from "@/components/layout/sidebar-item"
 import { SidebarSection } from "@/components/layout/sidebar-section"
 import { Sparkles, Clock, Settings, User } from "lucide-react"
 import { cn } from "@/lib/utils"
+import { useMediaQuery } from "@/hooks/use-media-query"
 
 const icons = {
   sparkles: Sparkles,
@@ -18,6 +18,8 @@ export interface SidebarProps {
 }
 
 export function Sidebar({ isOpen, onClose }: SidebarProps) {
+  const isDesktop = useMediaQuery("(min-width: 768px)")
+
   return (
     <>
       {/* Mobile overlay */}
@@ -66,7 +68,10 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
                           to={item.href}
                           label={item.label}
                           Icon={Icon}
-                          onClose={onClose}
+                          onClick={() => {
+                            if (!isDesktop) onClose()
+                          }}
+
                         />
                       </li>
                     )

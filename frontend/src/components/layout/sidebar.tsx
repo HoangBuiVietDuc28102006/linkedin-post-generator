@@ -20,7 +20,7 @@ export interface SidebarProps {
 export function Sidebar({ isOpen, onClose }: SidebarProps) {
   return (
     <>
-      {/* Mobile overlay (tap anywhere outside sidebar to close) */}
+      {/* Mobile overlay */}
       <div
         className={cn(
           "fixed inset-0 z-40 bg-black/50 transition-opacity md:hidden",
@@ -30,11 +30,14 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
         aria-hidden="true"
       />
 
-      {/* Mobile drawer */}
       <aside
         className={cn(
-          "fixed inset-y-0 left-0 z-50 w-64 bg-zinc-900 flex flex-col transform transition-transform md:hidden",
-          isOpen ? "translate-x-0" : "-translate-x-full"
+          "w-64 bg-zinc-900 flex flex-col",
+          // Desktop: visible and static
+          "md:static md:translate-x-0 md:min-h-screen md:z-auto",
+          // Mobile: drawer (always exists, just moves off-canvas)
+          "fixed inset-y-0 left-0 z-50 min-h-screen transform transition-transform md:transform-none",
+          isOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"
         )}
         aria-label="Sidebar"
       >
@@ -43,6 +46,7 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
           <img src={logo} alt="LIPG logo" className="h-8 w-auto" />
         </div>
 
+        {/* Divider */}
         <div className="border-t border-zinc-800" />
 
         {/* Navigation */}
@@ -62,57 +66,8 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
                           to={item.href}
                           label={item.label}
                           Icon={Icon}
-                          onClick={onClose} // tap link closes drawer
+                          onClick={onClose} // on desktop this is harmless
                         />
-                      </li>
-                    )
-                  })}
-                </SidebarSection>
-              </li>
-            ))}
-          </ul>
-        </nav>
-
-        {/* User block */}
-        <div className="mt-auto border-t border-zinc-800 p-4">
-          <div className="flex items-center gap-3">
-            <div className="flex h-9 w-9 items-center justify-center rounded-full bg-zinc-800">
-              <User className="h-4 w-4 text-zinc-400" />
-            </div>
-
-            <div className="min-w-0">
-              <div className="text-sm font-medium text-white truncate">
-                John Doe
-              </div>
-              <div className="text-xs text-zinc-400 truncate">Free plan</div>
-            </div>
-          </div>
-        </div>
-      </aside>
-
-      {/* Desktop sidebar */}
-      <aside className="hidden md:flex min-h-screen w-64 bg-zinc-900 flex-col">
-        {/* Logo */}
-        <div className="flex items-center justify-center py-6">
-          <img src={logo} alt="LIPG logo" className="h-8 w-auto" />
-        </div>
-
-        <div className="border-t border-zinc-800" />
-
-        {/* Navigation */}
-        <nav className="p-4">
-          <ul className="space-y-6">
-            {navigation.map((section) => (
-              <li key={section.title ?? "main"}>
-                <SidebarSection title={section.title}>
-                  {section.items.map((item) => {
-                    const Icon = item.icon
-                      ? icons[item.icon as keyof typeof icons]
-                      : undefined
-
-                    return (
-                      <li key={item.href}>
-                        <SidebarItem to={item.href} label={item.label} Icon={Icon} />
                       </li>
                     )
                   })}

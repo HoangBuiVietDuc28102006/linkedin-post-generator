@@ -6,15 +6,22 @@ export interface SidebarItemProps {
   to: string
   label: string
   Icon?: React.ComponentType<React.SVGProps<SVGSVGElement>>
-  onClick?: () => void
+  onClose?: () => void
 }
 
-export function SidebarItem({ to, label, Icon, onClick }: SidebarItemProps) {
+export function SidebarItem({ to, label, Icon, onClose }: SidebarItemProps) {
+  const handleClick = () => {
+    // Mobile only (Tailwind md breakpoint = 768px)
+    if (window.innerWidth < 768) {
+      onClose?.()
+    }
+  }
+
   return (
     <NavLink
       to={to}
       end={to === "/"}
-      onClick={onClick}
+      onClick={handleClick}
       className={({ isActive }) =>
         cn(
           "flex items-center gap-3 rounded-md px-3 py-2 text-sm transition-colors",

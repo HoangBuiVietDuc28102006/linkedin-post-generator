@@ -66,7 +66,7 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
                           to={item.href}
                           label={item.label}
                           Icon={Icon}
-                          onClick={onClose} // on desktop this is harmless
+                          onClose={onClose}
                         />
                       </li>
                     )

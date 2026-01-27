@@ -1,6 +1,10 @@
+import "./App.css"
+
 import { Routes, Route, Navigate } from "react-router-dom"
+
 import { AppShell } from "@/components/layout/app-shell"
 import GeneratePostPage from "@/pages/generate"
+import Footer from "./components/layout/footer"
 
 export default function App() {
   return (
@@ -13,9 +17,13 @@ export default function App() {
         <Route path="/generate" element={<GeneratePostPage />} />
 
         {/* Future routes */}
-        {/* <Route path="/history" element={<HistoryPage />} /> */}
-        {/* <Route path="/settings" element={<SettingsPage />} /> */}
+        {/*
+        <Route path="/history" element={<HistoryPage />} />
+        <Route path="/settings" element={<SettingsPage />} />
+        */}
       </Routes>
+
+      <Footer />
     </AppShell>
   )
 }

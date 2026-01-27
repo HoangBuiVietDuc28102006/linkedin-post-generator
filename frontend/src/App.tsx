@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Select } from "@/components/ui/dropdown"
 import Slider from "@/components/ui/slider"
+import Footer from "./components/layout/footer"
 
 function App() {
 
@@ -49,6 +50,7 @@ function App() {
         <Button variant="ghost" size="sm">Cancel</Button>
       </div>
 
+      <Footer />
     </>
   )
 }

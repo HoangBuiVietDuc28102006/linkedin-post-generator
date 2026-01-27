@@ -1,26 +1,20 @@
-import { Routes, Route } from "react-router-dom"
+import { Routes, Route, Navigate } from "react-router-dom"
 import { AppShell } from "@/components/layout/app-shell"
-import { Button } from "./components/ui/button"
-
-function CreatePostPage() {
-  return <div className="p-6 text-white"><Button>Generate Post</Button></div>
-}
-
-function HistoryPage() {
-  return <div className="p-6 text-white">History</div>
-}
-
-function SettingsPage() {
-  return <div className="p-6 text-white">Settings</div>
-}
+import GeneratePostPage from "@/pages/generate"
 
 export default function App() {
   return (
     <AppShell>
       <Routes>
-        <Route path="/" element={<CreatePostPage />} />
-        <Route path="/history" element={<HistoryPage />} />
-        <Route path="/settings" element={<SettingsPage />} />
+        {/* Redirect root to /generate */}
+        <Route path="/" element={<Navigate to="/generate" replace />} />
+
+        {/* Main page */}
+        <Route path="/generate" element={<GeneratePostPage />} />
+
+        {/* Future routes */}
+        {/* <Route path="/history" element={<HistoryPage />} /> */}
+        {/* <Route path="/settings" element={<SettingsPage />} /> */}
       </Routes>
     </AppShell>
   )

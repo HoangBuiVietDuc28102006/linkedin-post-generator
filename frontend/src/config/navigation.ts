@@ -14,8 +14,8 @@ export const navigation: NavigationSection[] = [
     title: "Generator",
     items: [
       {
-        label: "Create Post",
-        href: "/",
+        label: "Generate Post",
+        href: "/generate",
         icon: "sparkles",
       },
       {

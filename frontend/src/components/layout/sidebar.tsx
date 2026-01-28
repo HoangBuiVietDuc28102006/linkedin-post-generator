@@ -5,6 +5,7 @@ import { SidebarSection } from "@/components/layout/sidebar-section"
 import { Sparkles, Clock, Settings, User } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { useMediaQuery } from "@/hooks/use-media-query"
+import { UserMenu } from "@/components/layout/user-menu"
 
 const icons = {
   sparkles: Sparkles,
@@ -84,18 +85,11 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
 
         {/* User block */}
         <div className="mt-auto border-t border-zinc-800 p-4">
-          <div className="flex items-center gap-3">
-            <div className="flex h-9 w-9 items-center justify-center rounded-full bg-zinc-800">
-              <User className="h-4 w-4 text-zinc-400" />
-            </div>
-
-            <div className="min-w-0">
-              <div className="text-sm font-medium text-white truncate">
-                John Doe
-              </div>
-              <div className="text-xs text-zinc-400 truncate">Free plan</div>
-            </div>
-          </div>
+          <UserMenu
+            name="Long Phan"
+            handle="@long070904"
+            plan="Plus"
+          />
         </div>
       </aside>
     </>

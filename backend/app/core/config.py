@@ -30,6 +30,10 @@ class Settings(BaseSettings):
     openai_api_key: str = Field(default="", alias="OPENAI_API_KEY")
     openai_model: str = Field(default="gpt-4o-mini", alias="OPENAI_MODEL")
 
+    ollama_base_url: str = Field(default="http://localhost:11434", alias="OLLAMA_BASE_URL")
+    ollama_model: str = Field(default="llama3.1:8b-instruct", alias="OLLAMA_MODEL")
+
+
     def normalized_cors_origins(self) -> List[str]:
         if not self.cors_origins:
             return []

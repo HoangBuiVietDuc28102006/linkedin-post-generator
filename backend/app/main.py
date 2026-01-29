@@ -7,6 +7,8 @@ from fastapi.middleware.cors import CORSMiddleware
 from app.core.config import get_settings
 from app.core.logging import configure_logging, set_request_id
 
+from app.api.v1.router import api_router
+
 # Settings & Logging
 
 settings = get_settings()
@@ -57,3 +59,5 @@ async def request_context_middleware(request: Request, call_next):
     )
 
     return response
+
+app.include_router(api_router, prefix=settings.api_v1_prefix)

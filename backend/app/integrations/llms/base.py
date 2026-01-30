@@ -33,14 +33,18 @@ class LLMGenerationConfig:
 
 
 @dataclass(frozen=True)
-class LLMResponse:
-    content: str
-    model: Optional[str] = None
-
+class Usage:
     prompt_tokens: Optional[int] = None
     completion_tokens: Optional[int] = None
     total_tokens: Optional[int] = None
 
+
+@dataclass(frozen=True)
+class LLMResponse:
+    content: str
+    model: Optional[str] = None
+
+    usage: Optional[Usage] = None
     raw: Optional[Dict[str, Any]] = None
 
 

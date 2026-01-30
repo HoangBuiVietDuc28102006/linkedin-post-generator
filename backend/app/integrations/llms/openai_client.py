@@ -38,7 +38,7 @@ class OpenAIClient:
             {
                 "role": m.role,
                 "content": [
-                    {"type": "text", "text": m.content}
+                    {"type": "input_text", "text": m.content}
                 ],
             }
             for m in messages
@@ -46,12 +46,12 @@ class OpenAIClient:
 
         params: Dict[str, Any] = {
             "model": model,
-            "messages": messages,
+            "input": messages,
             "temperature": cfg.temperature,
         }
 
         if cfg.max_tokens is not None:
-            params["max_tokens"] = cfg.max_tokens
+            params["max_output_tokens "] = cfg.max_tokens
         if cfg.top_p is not None:
             params["top_p"] = cfg.top_p
         if cfg.presence_penalty is not None:

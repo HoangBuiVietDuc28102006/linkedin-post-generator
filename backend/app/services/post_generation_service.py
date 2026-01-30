@@ -1,67 +1,49 @@
 import logging
-from typing import Optional
 
-from app.schemas.post_generation import (
-    PostGenerationRequest,
-    PostGenerationResponse,
-)
+from app.integrations.llms.base import LLMClient
+from app.schemas.post_generation import PostGenerationRequest, PostGenerationResponse
+from app.services.prompt_builder import PromptBuilder
 
 logger = logging.getLogger(__name__)
 
 
 class PostGenerationService:
-    """
-    Orchestrates LinkedIn post generation.
+    def __init__(self, llm: LLMClient) -> None:
+        self._llm = llm
+        self._prompt_builder = PromptBuilder()
 
-    Responsibilities:
-    - Validate and normalize input
-    - Build prompt (later)
-    - Call LLM provider (later)
-    - Post-process output (later)
-    """
-
-    def __init__(self) -> None:
-        # Later:
-        # - inject LLM client
-        # - inject feature flags
-        pass
+    @property
+    def llm(self) -> LLMClient:
+        return self._llm
 
     def generate(self, data: PostGenerationRequest) -> PostGenerationResponse:
-        """
-        Generate a LinkedIn post based on user input.
-        """
-
         logger.info(
             "starting post generation",
             extra={
                 "topic": data.topic,
                 "tone": data.tone,
                 "length": data.length,
+                "llm_provider": self._llm.provider_name,
             },
         )
 
-        # TEMP placeholder implementation
-        content = self._placeholder_content(data)
+        prompt = self._prompt_builder.build_post_generation(data)
 
-        logger.info("post generation completed")
+        llm_response = self._llm.generate(
+            prompt.messages,
+            config=prompt.config,
+        )
+
+        content = (llm_response.content or "").strip()
+
+        logger.info(
+            "post generation completed",
+            extra={
+                "llm_model": llm_response.model,
+                "prompt_tokens": getattr(getattr(llm_response, "usage", None), "prompt_tokens", None),
+                "completion_tokens": getattr(getattr(llm_response, "usage", None), "completion_tokens", None),
+                "total_tokens": getattr(getattr(llm_response, "usage", None), "total_tokens", None),
+            },
+        )
 
         return PostGenerationResponse(content=content)
-
-    # -----------------------
-    # Internal helpers
-    # -----------------------
-
-    def _placeholder_content(self, data: PostGenerationRequest) -> str:
-        """
-        Temporary implementation until LLM integration is added.
-        """
-        keywords = ", ".join(data.keywords) if data.keywords else "no keywords"
-
-        return (
-            f"🚀 Topic: {data.topic}\n\n"
-            f"{data.description}\n\n"
-            f"Tone: {data.tone}\n"
-            f"Length: {data.length}\n"
-            f"Keywords: {keywords}\n\n"
-            "👉 Generated content will appear here."
-        )

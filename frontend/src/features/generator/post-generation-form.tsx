@@ -126,7 +126,7 @@ export function PostGenerationForm({ onGenerated, onError }: PostGenerationFormP
       <div className="flex flex-row items-center gap-[12px]">
         <label className="text-sm font-medium text-white">Topic</label>
         <select
-          className="h-10 w-50 rounded-md border border-zinc-700 bg-zinc-900 px-3 text-sm text-white focus:outline-none focus:ring-2 focus:ring-blue-600"
+          className="h-10 w-[18em] rounded-md border border-zinc-700 bg-zinc-900 px-3 text-sm text-white focus:outline-none focus:ring-2 focus:ring-blue-600"
           value={form.topic}
           onChange={(e) => update("topic", e.target.value as Topic)}
         >
@@ -154,7 +154,7 @@ export function PostGenerationForm({ onGenerated, onError }: PostGenerationFormP
       <div className="flex flex-row items-center gap-[12px]">
         <label className="text-sm font-medium text-white">Tone</label>
         <select
-          className="h-10 w-[12] rounded-md border border-zinc-700 bg-zinc-900 px-3 text-sm text-white focus:outline-none focus:ring-2 focus:ring-blue-600"
+          className="h-10 w-[18em] rounded-md border border-zinc-700 bg-zinc-900 px-3 text-sm text-white focus:outline-none focus:ring-2 focus:ring-blue-600"
           value={form.tone}
           onChange={(e) => update("tone", e.target.value as Tone)}
         >
@@ -171,7 +171,7 @@ export function PostGenerationForm({ onGenerated, onError }: PostGenerationFormP
         <div className="flex flex-row items-center gap-[12px]">
           <label className="text-sm font-medium text-white">Length</label>
           <select
-            className="h-10 w-48 rounded-md border border-zinc-700 bg-zinc-900 px-3 text-sm text-white focus:outline-none focus:ring-2 focus:ring-blue-600"
+            className="h-10 w-[17em] rounded-md border border-zinc-700 bg-zinc-900 px-3 text-sm text-white focus:outline-none focus:ring-2 focus:ring-blue-600"
             value={form.lengthPreset}
             onChange={(e) => {
               const preset = e.target.value as LengthPreset

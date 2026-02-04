@@ -35,12 +35,15 @@ function Slider({ min, max, value, step, onChange }: SliderProps) {
         const numeric = Number(raw)
 
         if (numeric == 0) {
-            setError("Please enter a number")
+            setError("Please enter a number.")
             return
         }
 
-        if (numeric < min || numeric > max) {
-            setError(`Sorry, enter a number between ${min} and ${max}`)
+        if (numeric > max) {
+            setError(`The maximum requirement is ${max} words.`)
+            return
+        } else if (numeric < min) {
+            setError(`The minimum requirement is ${min} words.`)
             return
         }
 
@@ -66,14 +69,10 @@ function Slider({ min, max, value, step, onChange }: SliderProps) {
                     onInput={handleNumberInput}
                     min={min}
                     max={max}
-                    className="number-input"
+                    className={`number-input ${error ? "input-error" : ""}`}
                     step={step}
                 />
-                {error && (
-                    <p className="text-sm text-red-400">
-                        {error}
-                    </p>
-                )}
+
             </div>
             <div className="slider-container">
                 <input
@@ -95,6 +94,13 @@ function Slider({ min, max, value, step, onChange }: SliderProps) {
                     style={{ width: `${sliderRange}%` }}
                 ></div>
             </div>
+            {error && (
+                <p className="error-container">
+                    <span className="error-prefix">Bruhh!</span>
+                    <span className="error-text">{error}</span>
+
+                </p>
+            )}
         </div>
     );
 }

@@ -112,8 +112,8 @@ export function PostGenerationForm({ onGenerated, onError }: PostGenerationFormP
   return (
     <form className="space-y-6" onSubmit={onSubmit}>
       {/* Description */}
-      <div className="space-y-2">
-        <label className="text-sm font-medium text-white">Short description</label>
+      <div className="flex flex-col gap-[12px]">
+        <label className="text-sm font-medium text-white">Description</label>
         <Textarea
           rows={5}
           placeholder="Write a brief description for the post..."

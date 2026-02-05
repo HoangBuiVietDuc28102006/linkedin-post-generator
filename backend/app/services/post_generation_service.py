@@ -1,5 +1,6 @@
 import logging
 
+from app.core.exceptions import UpstreamLLMError
 from app.integrations.llms.base import LLMClient
 from app.schemas.post_generation import PostGenerationRequest, PostGenerationResponse
 from app.services.prompt_builder import PromptBuilder
@@ -29,21 +30,30 @@ class PostGenerationService:
 
         prompt = self._prompt_builder.build_post_generation(data)
 
-        llm_response = self._llm.generate(
-            prompt.messages,
-            config=prompt.config,
-        )
+        try:
+            llm_response = self._llm.generate(
+                prompt.messages,
+                config=prompt.config,
+            )
+        except Exception as e:
+            # provider-specific exceptions get normalized here
+            raise UpstreamLLMError(
+                message="LLM generation failed",
+                details={"provider": self._llm.provider_name},
+            ) from e
 
         content = (llm_response.content or "").strip()
 
+        if not content:
+            # Treat empty content as upstream failure (often indicates provider trouble)
+            raise UpstreamLLMError(
+                message="LLM returned empty content",
+                details={"provider": self._llm.provider_name, "model": llm_response.model},
+            )
+
         logger.info(
             "post generation completed",
-            extra={
-                "llm_model": llm_response.model,
-                "prompt_tokens": getattr(getattr(llm_response, "usage", None), "prompt_tokens", None),
-                "completion_tokens": getattr(getattr(llm_response, "usage", None), "completion_tokens", None),
-                "total_tokens": getattr(getattr(llm_response, "usage", None), "total_tokens", None),
-            },
+            extra={"model": llm_response.model, "provider": self._llm.provider_name},
         )
 
         return PostGenerationResponse(content=content)

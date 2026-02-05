@@ -9,19 +9,20 @@ import {
 import { cn } from "@/lib/utils"
 import { useNavigate } from "react-router-dom"
 
-
 type UserMenuProps = {
   name: string
   handle?: string
   plan?: string
+  onNavigate?: () => void // ✅ NEW
 }
 
 export function UserMenu({
   name,
   handle = "@username",
   plan = "Free",
+  onNavigate,
 }: UserMenuProps) {
-  const navigate = useNavigate()  
+  const navigate = useNavigate()
   const [open, setOpen] = useState(false)
   const ref = useRef<HTMLDivElement>(null)
 
@@ -83,30 +84,24 @@ export function UserMenu({
         <div className="absolute bottom-full left-0 mb-2 w-full rounded-2xl border border-zinc-800 bg-zinc-900 p-2 shadow-xl z-50">
           <MenuItem icon={Sparkles} label="Upgrade plan" />
           <MenuItem icon={Palette} label="Personalization" />
-          <MenuItem
-                icon={Settings}
-                label="Settings"
-                onClick={() => {
-                    navigate("/settings")
-                    setOpen(false)
-                }} />
-
-
-          <Divider />
 
           <MenuItem
-            icon={HelpCircle}
-            label="Help"
-            right="›"
+            icon={Settings}
+            label="Settings"
+            onClick={() => {
+              navigate("/settings")
+              setOpen(false)
+              onNavigate?.() // ✅ close sidebar
+            }}
           />
 
           <Divider />
 
-          <MenuItem
-            icon={LogOut}
-            label="Log out"
-            danger
-          />
+          <MenuItem icon={HelpCircle} label="Help" right="›" />
+
+          <Divider />
+
+          <MenuItem icon={LogOut} label="Log out" danger />
         </div>
       )}
     </div>
@@ -143,7 +138,6 @@ function MenuItem({
     </button>
   )
 }
-
 
 function Divider() {
   return <div className="my-2 h-px bg-zinc-800" />

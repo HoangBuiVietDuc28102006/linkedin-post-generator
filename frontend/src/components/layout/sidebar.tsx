@@ -2,7 +2,7 @@ import logo from "@/assets/LIPG.png"
 import { navigation } from "@/config/navigation"
 import { SidebarItem } from "@/components/layout/sidebar-item"
 import { SidebarSection } from "@/components/layout/sidebar-section"
-import { Sparkles, Clock, Settings, User } from "lucide-react"
+import { Sparkles, Clock, Settings } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { useMediaQuery } from "@/hooks/use-media-query"
 import { UserMenu } from "@/components/layout/user-menu"
@@ -36,9 +36,7 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
       <aside
         className={cn(
           "w-64 bg-zinc-900 flex flex-col",
-          // Desktop: visible and static
           "md:static md:translate-x-0 md:min-h-screen md:z-auto",
-          // Mobile: drawer (always exists, just moves off-canvas)
           "fixed inset-y-0 left-0 z-50 min-h-screen transform transition-transform md:transform-none",
           isOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"
         )}
@@ -49,7 +47,6 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
           <img src={logo} alt="LIPG logo" className="h-8 w-auto" />
         </div>
 
-        {/* Divider */}
         <div className="border-t border-zinc-800" />
 
         {/* Navigation */}
@@ -72,7 +69,6 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
                           onClick={() => {
                             if (!isDesktop) onClose()
                           }}
-
                         />
                       </li>
                     )
@@ -89,6 +85,9 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
             name="Long Phan"
             handle="@long070904"
             plan="Plus"
+            onNavigate={() => {
+              if (!isDesktop) onClose()
+            }}
           />
         </div>
       </aside>
